@@ -31,7 +31,7 @@ def oneBigFileOutput(files, ofname):
     for index,file in enumerate(files):
         logs = file.split('/')
         if(os.stat(file).st_size!=0):#only for files with content
-            if (index % 2 ==0): print('Processing:: %s' %logs[len(logs)-1])
+            if (index % 2000 ==0): print('Processing:: %s' %logs[len(logs)-1])
             with open(file, 'r', encoding='utf-8') as fin:
                 for line in fin.readlines():
                     big_document.write(line)

@@ -9,7 +9,7 @@ UPDATES:
 [2018-12-07]
 1. Fixed relative paths
 2. output should contain the output-filename as well
-3. removed ofname from command line
+3. removed output filne name from command line
 
 [2018-10-30]
 1. Combines several files in one single file
