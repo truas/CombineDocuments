@@ -1,65 +1,52 @@
-'''
-Created on Oct 30, 2018
-
-@author: terry
-'''
-from asyncore import write
-'''
-Created on Oct 26, 2018
-
-@author: terry
-'''
 #imports
-import re
 import os
-import nltk
 import time
 
-#froms
-from datetime import timedelta
+#from
 from stop_words import get_stop_words
+from default.textParser import TextParser
 en_stop = get_stop_words('en') # list of stopwords/english
 
 #overall runtime start
 start_time = time.monotonic()
 
-#===============================================================================
-# Document Reading/Writing
-#===============================================================================
-def oneBigFileOutput(files, ofname):
-    big_document = open(ofname, 'w+',encoding='utf-8')    
-    for index,file in enumerate(files):
-            logs = file.split('/')
-            if (index % 3000 ==0): print('Processing:: %s' %logs[len(logs)-1])
-            with open(file, 'r', encoding='utf-8') as fin:
-                for line in fin.readlines():
-                    big_document.write(removeASCIItrash(line))
-            big_document.write('\n') 
-    big_document.close()   
-#creates one file with each line being a document in the files list
-
-#===============================================================================
-# Folder manipulation
-#===============================================================================
-def doclist_multifolder(folder_name):
-    input_file_list = []
-    for roots, dir, files in os.walk(folder_name):
-        for file in files:
-            file_uri = os.path.join(roots, file)
-            file_uri = file_uri.replace("\\","/") #uncoment if running on windows           
-            if file_uri.endswith('txt'): input_file_list.append(file_uri)
-    return input_file_list
-#creates list of documents in many folders
-
-def fname_splitter(docslist):
-    fnames = []
-    for doc in docslist:
-        blocks = doc.split('/')
-        fnames.append(blocks[len(blocks)-1])
-    return(fnames)
-#getting the filenames from uri of whatever documents were processed in the input folder   
-
-def removeASCIItrash(words):
-    cwords = words.encode('ascii', 'ignore').decode("utf-8")
-    return (cwords)
-#removing unwanted chars/trash from sentences as strings
+class Combiner:
+    #===============================================================================
+    # Document Reading/Writing
+    #===============================================================================
+    def oneBigFileOutput(self, files, ofname):
+        tp = TextParser()
+        big_document = open(ofname, 'w+', encoding='utf-8')    
+        for index, file in enumerate(files):
+            logs = file.split(os.sep)
+            if (index % 5000 ==0): print('Processing:: %s' %logs[len(logs)-1])
+            text = self.readFile(file)
+            text = tp.cleanText(text)
+            text = tp.concatenateWords(text)
+            big_document.write(text+'\n')
+        big_document.close()   
+    #creates one file with each line being a document in the files list
+    
+    #===============================================================================
+    # Folder manipulation
+    #===============================================================================
+    def doclist_multifolder(self, folder_name):
+        input_file_list = []
+        for roots, dir, files in os.walk(folder_name):
+            for file in files:
+                file_uri = os.path.join(roots, file)
+                #file_uri = file_uri.replace("\\","/") #uncomment if running on windows           
+                if file_uri.endswith('txt'): input_file_list.append(file_uri)
+        return input_file_list
+    #creates list of documents in many folders
+    
+    def readFile(self, file_name):
+        text = ""
+        try:
+            f = open(file_name, errors="ignore")
+            text = f.read()
+            f.close()
+        except IOError:
+            raise ("FAILED: Problem reading file: " + file_name)
+        return text 
+    #read file entirely

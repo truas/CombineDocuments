@@ -6,6 +6,10 @@ Folder used to read/write should be in the same level at 'default' package
 
 UPDATES:
 ==========
+[2019-02-06]
+1. Transforms multiple files into one document per line file
+2- Refactor for classes, text parser, command line, etc.
+
 [2018-12-08]
 1. Messages for empty line not printed anymore
 2. Included function to deal with unwanted binary characters
