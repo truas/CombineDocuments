@@ -30,12 +30,7 @@ class TextParser:
             text+=word+' '
         return text
     
-    #removing unwanted chars/trash from sentences as strings
+    #  removing unwanted chars/trash from sentences as strings
     def removeASCIItrash(self, words):
         cwords = words.encode('ascii', 'ignore').decode("utf-8")
-        return (cwords)
-    
-        
-        
-        
-        
+        return cwords

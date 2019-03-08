@@ -3,16 +3,16 @@ Created on Oct 30, 2018
 
 @author: terry
 '''
-#import
+# import
 import logging
 import sys
 import os
 
-#python module absolute path
+# python module absolute path
 pydir_name = os.path.dirname(os.path.abspath(__file__))
 ppydir_name = os.path.dirname(pydir_name)
 
-#python path definition
+# python path definition
 sys.path.append(os.path.join(os.path.dirname(__file__),os.path.pardir))
 
 
@@ -26,16 +26,16 @@ logging.basicConfig(
 
 
 
-#main program
+# main program
 if __name__ == '__main__':  
     params = CommandLine()
     comb = Combiner()
        
-    #folder paths
+    # folder paths
     input_folder = params.input_folder
     output_folder = params.output_folder
  
-    #in/ou relative location - #input/output/model folders are under synset/module/
+    # in/ou relative location - #input/output/model folders are under synset/module/
     in_foname = os.path.join(ppydir_name, input_folder) 
     ou_foname = os.path.join(ppydir_name, output_folder)
     

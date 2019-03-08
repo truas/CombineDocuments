@@ -4,11 +4,13 @@ Folder used to read/write should be in the same level at 'default' package
 
 	python3 main_merger.py --input <input-folder-location> --output <output--folder-location>
 
+* It also performs a small pre-processing: removing english stop-words, lower case and tokenize the document it reads
+
 UPDATES:
 ==========
 [2019-02-06]
 1. Transforms multiple files into one document per line file
-2- Refactor for classes, text parser, command line, etc.
+2. Refactor for classes, text parser, command line, etc.
 
 [2018-12-08]
 1. Messages for empty line not printed anymore
